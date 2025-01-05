@@ -1,13 +1,14 @@
 // (dashboard)/ProductsClient.tsx
+
 'use client';
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
 import { insertProduct } from '@/lib/insertProduct';
+import { updateProduct } from '@/lib/updateProduct';
 import { ProductsTable } from './products-table';
 
-// Definir la interfaz para las props
 interface Product {
   id: string;
   nombre: string;
@@ -28,26 +29,49 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
   const [precio, setPrecio] = useState(0);
   const [descripcion, setDescripcion] = useState('');
   const [imagen, setImagen] = useState<File | null>(null);
+  const [productToEdit, setProductToEdit] = useState<Product | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (imagen) {
-      await insertProduct(imagen, nombre, descripcion, precio);
-      setIsModalOpen(false);
-      setNombre('');
-      setPrecio(0);
-      setDescripcion('');
-      setImagen(null);
+      try {
+        if (productToEdit) {
+          await updateProduct(productToEdit.id, nombre, descripcion, precio, imagen);
+        } else {
+          await insertProduct(imagen, nombre, descripcion, precio);
+        }
+        setIsModalOpen(false);
+        resetForm();
+      } catch (error) {
+        console.error('Error al actualizar el producto:', error);
+        alert('Hubo un error al actualizar el producto. Detalles: ' + (error instanceof Error ? error.message : 'Error desconocido'));
+      }
     } else {
       console.log('Por favor, selecciona una imagen.');
     }
+  };
+
+  const handleEdit = (product: Product) => {
+    setProductToEdit(product);
+    setNombre(product.nombre);
+    setDescripcion(product.descripcion);
+    setPrecio(product.precio);
+    setIsModalOpen(true);
+  };
+
+  const resetForm = () => {
+    setNombre('');
+    setPrecio(0);
+    setDescripcion('');
+    setImagen(null);
+    setProductToEdit(null);
   };
 
   return (
     <>
       <div className="flex items-center">
         <div className="ml-auto flex items-center gap-2">
-          <Button size="sm" className="h-8 gap-1" onClick={() => setIsModalOpen(true)}>
+          <Button size="sm" className="h-8 gap-1" onClick={() => { setIsModalOpen(true); resetForm(); }}>
             <PlusCircle className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Añadir producto
@@ -56,11 +80,10 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
         </div>
       </div>
 
-      {/* Formulario Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg w-96">
-            <h3 className="text-lg font-medium mb-4">Añadir Nuevo Producto</h3>
+            <h3 className="text-lg font-medium mb-4">{productToEdit ? 'Editar Producto' : 'Añadir Nuevo Producto'}</h3>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-sm font-medium">Nombre</label>
@@ -104,23 +127,23 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
                 />
               </div>
 
-              <div className="flex justify-end">
-                <Button type="submit" size="sm">Añadir Producto</Button>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => { setIsModalOpen(false); resetForm(); }}>
+                  Cancelar
+                </Button>
+                <Button type="submit">{productToEdit ? 'Actualizar Producto' : 'Añadir Producto'}</Button>
               </div>
             </form>
-            <Button size="sm" variant="ghost" onClick={() => setIsModalOpen(false)} className="mt-2">
-              Cancelar
-            </Button>
           </div>
         </div>
       )}
 
       <ProductsTable
         products={products}
-        offset={newOffset ?? 0}
+        offset={newOffset}
         totalProducts={totalProducts}
+        onEdit={handleEdit} 
       />
     </>
   );
 }
-    

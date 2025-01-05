@@ -1,5 +1,4 @@
 // (dashboard)/products-table.tsx
-
 'use client';
 
 import { TableHead, TableRow, TableHeader, TableBody, Table } from '@/components/ui/table';
@@ -11,11 +10,13 @@ import { useRouter } from 'next/navigation';
 export function ProductsTable({
   products,
   offset,
-  totalProducts
+  totalProducts,
+  onEdit
 }: {
   products: any[];
   offset: number;
   totalProducts: number;
+  onEdit: (product: any) => void; // Pasamos la función onEdit
 }) {
   const router = useRouter();
   const productsPerPage = 5;
@@ -41,7 +42,7 @@ export function ProductsTable({
         </TableHeader>
         <TableBody>
           {products.map((product) => (
-            <Product key={product.id} product={product} />
+            <Product key={product.id} product={product} onEdit={onEdit} /> // Aquí pasas onEdit
           ))}
         </TableBody>
       </Table>
