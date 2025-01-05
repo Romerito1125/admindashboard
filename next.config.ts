@@ -1,5 +1,6 @@
 export default {
   images: {
+    domains: ['qryjhpoosjhlhfjrsadz.supabase.co'],
     remotePatterns: [
       {
         protocol: 'https',
