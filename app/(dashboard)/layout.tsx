@@ -74,19 +74,19 @@ function DesktopNav() {
           <Home className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="#" label="Orders">
+        <NavItem href="#" label="Ordenes">
           <ShoppingCart className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="/" label="Products">
+        <NavItem href="/" label="Productos">
           <Package className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="/customers" label="Customers">
+        <NavItem href="/customers" label="Clientes">
           <Users2 className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="#" label="Analytics">
+        <NavItem href="#" label="Estadísticas">
           <LineChart className="h-5 w-5" />
         </NavItem>
       </nav>
@@ -98,10 +98,10 @@ function DesktopNav() {
               className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
             >
               <Settings className="h-5 w-5" />
-              <span className="sr-only">Settings</span>
+              <span className="sr-only">Configuración</span>
             </Link>
           </TooltipTrigger>
-          <TooltipContent side="right">Settings</TooltipContent>
+          <TooltipContent side="right">Configuración</TooltipContent>
         </Tooltip>
       </nav>
     </aside>
@@ -114,7 +114,7 @@ function MobileNav() {
       <SheetTrigger asChild>
         <Button size="icon" variant="outline" className="sm:hidden">
           <PanelLeft className="h-5 w-5" />
-          <span className="sr-only">Toggle Menu</span>
+          <span className="sr-only">Ocultar menú</span>
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="sm:max-w-xs">
@@ -138,28 +138,28 @@ function MobileNav() {
             className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
           >
             <ShoppingCart className="h-5 w-5" />
-            Orders
+            Ordenes
           </Link>
           <Link
             href="#"
             className="flex items-center gap-4 px-2.5 text-foreground"
           >
             <Package className="h-5 w-5" />
-            Products
+            Productos
           </Link>
           <Link
             href="#"
             className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
           >
             <Users2 className="h-5 w-5" />
-            Customers
+            Clientes
           </Link>
           <Link
             href="#"
             className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
           >
             <LineChart className="h-5 w-5" />
-            Settings
+            Configuración
           </Link>
         </nav>
       </SheetContent>
