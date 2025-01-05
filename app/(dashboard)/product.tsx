@@ -12,37 +12,38 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { deleteProduct } from './actions';
+import { deleteProduct } from '../../lib/deleteProduct';
 
-export function Product({ product }: { product: any }) { 
+export function Product({ product }: { product: any }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
         <Image
-          alt="Product image"
+          alt="Imagen del producto"
           className="aspect-square rounded-md object-cover"
           height="64"
-          src={product.imagen_url} 
+          src={product.imagen_url}
           width="64"
         />
       </TableCell>
-      <TableCell className="font-medium">{product.nombre}</TableCell> 
-      <TableCell className="hidden md:table-cell">{`$${product.precio}`}</TableCell> 
-      
+      <TableCell className="font-medium">{product.nombre}</TableCell>
+      <TableCell className="hidden md:table-cell">{`$${product.precio}`}</TableCell>
+
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button aria-haspopup="true" size="icon" variant="ghost">
               <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">Toggle menu</span>
+              <span className="sr-only">Ocultar menu</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+            <DropdownMenuItem>Editar</DropdownMenuItem>
             <DropdownMenuItem>
               <form action={deleteProduct}>
-                <button type="submit">Delete</button>
+                <input type="hidden" name="productId" value={product.id} />
+                <button type="submit">Eliminar</button>
               </form>
             </DropdownMenuItem>
           </DropdownMenuContent>

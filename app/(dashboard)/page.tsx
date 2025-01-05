@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductsTable } from './products-table';
-import { getProducts } from '@/lib/getProducts'; // Importar correctamente
+import { getProducts } from '@/lib/getProducts'; 
 
 export default async function ProductsPage(
   props: {
@@ -12,10 +12,9 @@ export default async function ProductsPage(
   }
 ) {
   const searchParams = await props.searchParams;
-  const search = searchParams.q ?? ''; // Valor de búsqueda
-  const offset = parseInt(searchParams.offset ?? '0'); // Valor de offset
+  const search = searchParams.q ?? '';
+  const offset = parseInt(searchParams.offset ?? '0');
 
-  // Llamada a la función getProducts con los parámetros
   const { products, newOffset, totalProducts } = await getProducts(
     search,
     offset
@@ -42,7 +41,6 @@ export default async function ProductsPage(
         </div>
       </div>
       <TabsContent value="all">
-        {/* Pasamos los productos a la tabla */}
         <ProductsTable
           products={products}
           offset={newOffset ?? 0}

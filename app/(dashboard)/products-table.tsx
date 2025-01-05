@@ -13,13 +13,12 @@ export function ProductsTable({
   offset,
   totalProducts
 }: {
-  products: any[]; // Asegúrate de que la estructura de productos sea correcta
+  products: any[];
   offset: number;
   totalProducts: number;
 }) {
   const router = useRouter();
   const productsPerPage = 5;
-
   function prevPage() {
     router.push(`/?offset=${Math.max(0, offset - productsPerPage)}`);
   }
@@ -40,7 +39,6 @@ export function ProductsTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {/* Mapea los productos */}
           {products.map((product) => (
             <Product key={product.id} product={product} />
           ))}
