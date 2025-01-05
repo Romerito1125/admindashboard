@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, Table } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteProduct } from '../../lib/deleteProduct';
 
@@ -27,6 +27,7 @@ export function Product({ product }: { product: any }) {
         />
       </TableCell>
       <TableCell className="font-medium">{product.nombre}</TableCell>
+      <TableCell className="font-medium">{product.descripcion}</TableCell>
       <TableCell className="hidden md:table-cell">{`$${product.precio}`}</TableCell>
 
       <TableCell>

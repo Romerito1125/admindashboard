@@ -1,4 +1,4 @@
-import { supabase } from "./supaClient.ts";
+import { supabase } from './supaClient.ts';
 
 async function uploadImage(file: File) {
     const { data, error } = await supabase.storage
@@ -9,16 +9,21 @@ async function uploadImage(file: File) {
         });
 
     if (error) {
-        console.error('Error uploading image:', error.message);
+        console.error('Error al subir la imagen:', error.message);
         return null;
     }
 
-    // Generar URL pública o privada según tu configuración
-    const { publicUrl } = supabase.storage
+    // Obtener la URL pública de la imagen subida
+    const response = supabase.storage
         .from('images')
         .getPublicUrl(`products/${file.name}`);
 
-    return publicUrl;
+    if (response.data) {
+        return response.data.publicUrl;  // Accede a la URL dentro de 'data'
+    } else {
+        console.error('Error al obtener la URL pública');
+        return null;
+    }
 }
 
-export { uploadImage }
+export { uploadImage };

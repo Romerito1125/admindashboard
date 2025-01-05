@@ -35,6 +35,7 @@ export function ProductsTable({
             <TableHead>Imagen</TableHead>
             <TableHead>Nombre</TableHead>
             <TableHead className="hidden md:table-cell">Precio</TableHead>
+            <TableHead className="hidden md:table-cell">Descripción</TableHead>
             <TableHead>Acciones</TableHead>
           </TableRow>
         </TableHeader>
