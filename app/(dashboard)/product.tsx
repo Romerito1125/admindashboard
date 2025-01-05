@@ -14,7 +14,7 @@ import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteProduct } from './actions';
 
-export function Product({ product }: { product: any }) { // Cambié SelectProduct a 'any' ya que no es necesario definirlo ahora
+export function Product({ product }: { product: any }) { 
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -22,21 +22,13 @@ export function Product({ product }: { product: any }) { // Cambié SelectProduc
           alt="Product image"
           className="aspect-square rounded-md object-cover"
           height="64"
-          src={product.imagen_url} // Usamos 'imagen_url' como en tu esquema de base de datos
+          src={product.imagen_url} 
           width="64"
         />
       </TableCell>
-      <TableCell className="font-medium">{product.nombre}</TableCell> {/* 'nombre' es el campo de tu base de datos */}
-      <TableCell>
-        <Badge variant="outline" className="capitalize">
-          {product.estado} {/* Puedes tener un campo 'estado' si lo agregas, o mantenerlo como 'activo' u otro estado */}
-        </Badge>
-      </TableCell>
-      <TableCell className="hidden md:table-cell">{`$${product.precio}`}</TableCell> {/* 'precio' de la base de datos */}
-      <TableCell className="hidden md:table-cell">{product.stock}</TableCell> {/* Si tienes stock o lo manejas en otro campo */}
-      <TableCell className="hidden md:table-cell">
-        {new Date(product.created_at).toLocaleDateString("en-US")} {/* Suponiendo que 'created_at' es una fecha en la base de datos */}
-      </TableCell>
+      <TableCell className="font-medium">{product.nombre}</TableCell> 
+      <TableCell className="hidden md:table-cell">{`$${product.precio}`}</TableCell> 
+      
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
