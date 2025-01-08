@@ -70,24 +70,12 @@ function DesktopNav() {
           <span className="sr-only">Acme Inc</span>
         </Link>
 
-        <NavItem href="#" label="Dashboard">
-          <Home className="h-5 w-5" />
-        </NavItem>
-
-        <NavItem href="#" label="Ordenes">
-          <ShoppingCart className="h-5 w-5" />
-        </NavItem>
-
         <NavItem href="/" label="Productos">
           <Package className="h-5 w-5" />
         </NavItem>
 
         <NavItem href="/customers" label="Clientes">
-          <Users2 className="h-5 w-5" />
-        </NavItem>
-
-        <NavItem href="#" label="Estadísticas">
-          <LineChart className="h-5 w-5" />
+          <ShoppingCart className="h-5 w-5" />
         </NavItem>
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
