@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-
+import { AuthRedirect } from '../authredirect';
 export default function CustomersPage() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -47,7 +47,9 @@ export default function CustomersPage() {
   const orderStates = ['pendiente', 'en preparación', 'listo', 'enviado'];
 
   return (
+    
     <Card>
+      <AuthRedirect />
       <CardHeader>
         <CardTitle>Clientes</CardTitle>
         <CardDescription>
