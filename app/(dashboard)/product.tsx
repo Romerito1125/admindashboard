@@ -14,7 +14,13 @@ import { MoreHorizontal, Table } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteProduct } from '../../lib/deleteProduct';
 
-export function Product({ product, onEdit }: { product: any, onEdit: (product: any) => void }) {
+export function Product({
+  product,
+  onEdit
+}: {
+  product: any;
+  onEdit: (product: any) => void;
+}) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -28,6 +34,7 @@ export function Product({ product, onEdit }: { product: any, onEdit: (product: a
       </TableCell>
       <TableCell className="font-medium">{product.nombre}</TableCell>
       <TableCell className="font-medium">{product.descripcion}</TableCell>
+      <TableCell className="font-medium">{product.categoria}</TableCell>
       <TableCell className="hidden md:table-cell">{`$${product.precio}`}</TableCell>
 
       <TableCell>
@@ -40,7 +47,9 @@ export function Product({ product, onEdit }: { product: any, onEdit: (product: a
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => onEdit(product)}>Editar</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onEdit(product)}>
+              Editar
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <form action={deleteProduct}>
                 <input type="hidden" name="productId" value={product.id} />

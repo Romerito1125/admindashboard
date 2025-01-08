@@ -15,6 +15,7 @@ interface Product {
   descripcion: string;
   imagen_url: string;
   precio: number;
+  categoria: string;
 }
 
 interface ProductsClientProps {
@@ -29,6 +30,7 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
   const [precio, setPrecio] = useState(0);
   const [descripcion, setDescripcion] = useState('');
   const [imagen, setImagen] = useState<File | null>(null);
+  const [categoria, setCategoria] = useState('');
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -36,9 +38,9 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
     if (imagen) {
       try {
         if (productToEdit) {
-          await updateProduct(productToEdit.id, nombre, descripcion, precio, imagen);
+          await updateProduct(productToEdit.id, nombre, descripcion, precio, imagen, categoria);
         } else {
-          await insertProduct(imagen, nombre, descripcion, precio);
+          await insertProduct(imagen, nombre, descripcion, precio, categoria);
         }
         setIsModalOpen(false);
         resetForm();
@@ -56,6 +58,7 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
     setNombre(product.nombre);
     setDescripcion(product.descripcion);
     setPrecio(product.precio);
+    setCategoria(product.categoria);
     setIsModalOpen(true);
   };
 
@@ -64,6 +67,7 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
     setPrecio(0);
     setDescripcion('');
     setImagen(null);
+    setCategoria('');
     setProductToEdit(null);
   };
 
@@ -112,6 +116,17 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
                 <textarea
                   value={descripcion}
                   onChange={(e) => setDescripcion(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  required
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium">Categoría</label>
+                <input
+                  type="text"
+                  value={categoria}
+                  onChange={(e) => setCategoria(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md"
                   required
                 />

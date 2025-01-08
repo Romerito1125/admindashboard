@@ -1,7 +1,7 @@
 import { supabase } from "./supaClient.ts";
 import { uploadImage } from "./uploadImages.ts";
 
-export async function insertProduct(file: File, nombre: string, descripcion: string, precio: number) {
+export async function insertProduct(file: File, nombre: string, descripcion: string, precio: number, categoria: string) {
     const imagenUrl = await uploadImage(file);
     if (!imagenUrl) {
         console.error('Error: No se pudo obtener la URL de la imagen');
@@ -11,8 +11,9 @@ export async function insertProduct(file: File, nombre: string, descripcion: str
     const { data, error } = await supabase.from('productos').insert([{
         nombre: nombre,
         descripcion: descripcion,
-        imagen_url: imagenUrl, 
-        precio: precio
+        imagen_url: imagenUrl,
+        precio: precio,
+        categoria: categoria
     }]);
 
     if (error) {
@@ -21,4 +22,3 @@ export async function insertProduct(file: File, nombre: string, descripcion: str
         console.log('Producto creado correctamente:', data);
     }
 }
-
