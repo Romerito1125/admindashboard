@@ -10,6 +10,7 @@ if (!SECRET_KEY) {
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  // Excluir rutas de login y otras rutas públicas del middleware
   if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
     return NextResponse.next();
   }

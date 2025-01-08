@@ -18,8 +18,8 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json({ message: 'Inicio de sesión exitoso' });
 
     response.cookies.set('token', token, {
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === 'production', 
+      httpOnly: false, 
+      secure: false,
       maxAge: 60 * 60, 
       path: '/', 
     });
