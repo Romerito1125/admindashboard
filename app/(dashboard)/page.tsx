@@ -18,11 +18,6 @@ export default async function ProductsPage(
     <Tabs defaultValue="all">
       <TabsList>
         <TabsTrigger value="all">Todos</TabsTrigger>
-        <TabsTrigger value="active">Activos</TabsTrigger>
-        <TabsTrigger value="draft">Borradores</TabsTrigger>
-        <TabsTrigger value="archived" className="hidden sm:flex">
-          Archivado
-        </TabsTrigger>
       </TabsList>
 
       <TabsContent value="all">
