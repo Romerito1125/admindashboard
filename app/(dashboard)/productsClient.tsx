@@ -1,5 +1,3 @@
-// (dashboard)/ProductsClient.tsx
-
 'use client';
 
 import { useState } from 'react';
@@ -24,6 +22,21 @@ interface ProductsClientProps {
   totalProducts: number;
 }
 
+const CATEGORIAS = [
+  'Cumpleaños',
+  'Deluxe',
+  'Funebres',
+  'Bouquets',
+  'Canastas',
+  '15 Años',
+  'Aniversario',
+  'Grado',
+  'Recuperación',
+  'Cajas',
+  'Flores',
+  'Plantas',
+];
+
 export function ProductsClient({ products, newOffset, totalProducts }: ProductsClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [nombre, setNombre] = useState('');
@@ -35,21 +48,27 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (imagen) {
-      try {
-        if (productToEdit) {
-          await updateProduct(productToEdit.id, nombre, descripcion, precio, imagen, categoria);
-        } else {
-          await insertProduct(imagen, nombre, descripcion, precio, categoria);
+
+    try {
+      if (productToEdit) {
+        const imagenFinal = imagen || productToEdit.imagen_url;
+        await updateProduct(productToEdit.id, nombre, descripcion, precio, imagenFinal, categoria);
+      } else {
+        if (!imagen) {
+          alert('Por favor, selecciona una imagen para el nuevo producto.');
+          return;
         }
-        setIsModalOpen(false);
-        resetForm();
-      } catch (error) {
-        console.error('Error al actualizar el producto:', error);
-        alert('Hubo un error al actualizar el producto. Detalles: ' + (error instanceof Error ? error.message : 'Error desconocido'));
+        await insertProduct(imagen, nombre, descripcion, precio, categoria);
       }
-    } else {
-      console.log('Por favor, selecciona una imagen.');
+
+      setIsModalOpen(false);
+      resetForm();
+    } catch (error) {
+      console.error('Error al procesar el producto:', error);
+      alert(
+        'Hubo un error al procesar el producto. Detalles: ' +
+          (error instanceof Error ? error.message : 'Error desconocido')
+      );
     }
   };
 
@@ -75,11 +94,16 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
     <>
       <div className="flex items-center">
         <div className="ml-auto flex items-center gap-2">
-          <Button size="sm" className="h-8 gap-1" onClick={() => { setIsModalOpen(true); resetForm(); }}>
+          <Button
+            size="sm"
+            className="h-8 gap-1"
+            onClick={() => {
+              setIsModalOpen(true);
+              resetForm();
+            }}
+          >
             <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Añadir producto
-            </span>
+            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Añadir producto</span>
           </Button>
         </div>
       </div>
@@ -87,7 +111,9 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg w-96">
-            <h3 className="text-lg font-medium mb-4">{productToEdit ? 'Editar Producto' : 'Añadir Nuevo Producto'}</h3>
+            <h3 className="text-lg font-medium mb-4">
+              {productToEdit ? 'Editar Producto' : 'Añadir Nuevo Producto'}
+            </h3>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-sm font-medium">Nombre</label>
@@ -123,13 +149,21 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
 
               <div className="mb-4">
                 <label className="block text-sm font-medium">Categoría</label>
-                <input
-                  type="text"
+                <select
                   value={categoria}
                   onChange={(e) => setCategoria(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md"
                   required
-                />
+                >
+                  <option value="" disabled>
+                    Selecciona una categoría
+                  </option>
+                  {CATEGORIAS.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="mb-4">
@@ -138,12 +172,18 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
                   type="file"
                   onChange={(e) => setImagen(e.target.files ? e.target.files[0] : null)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                  required
+                  required={!productToEdit}
                 />
               </div>
 
               <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={() => { setIsModalOpen(false); resetForm(); }}>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    resetForm();
+                  }}
+                >
                   Cancelar
                 </Button>
                 <Button type="submit">{productToEdit ? 'Actualizar Producto' : 'Añadir Producto'}</Button>
@@ -157,7 +197,7 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
         products={products}
         offset={newOffset}
         totalProducts={totalProducts}
-        onEdit={handleEdit} 
+        onEdit={handleEdit}
       />
     </>
   );

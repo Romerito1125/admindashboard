@@ -7,12 +7,13 @@ export async function updateProduct(
   nombre: string,
   descripcion: string,
   precio: number,
-  imagen: File | null,
-  categoria: string 
+  imagen: File | string, // Puede ser un archivo o una URL
+  categoria: string
 ): Promise<Product | null> {
   try {
     let imagenUrl: string | null = null;
-    if (imagen) {
+
+    if (imagen instanceof File) {
       imagenUrl = await uploadImage(imagen);
       if (!imagenUrl) {
         console.log('Datos a actualizar:', {
@@ -25,6 +26,8 @@ export async function updateProduct(
 
         throw new Error('Error al subir la imagen');
       }
+    } else if (typeof imagen === 'string') {
+      imagenUrl = imagen;
     }
 
     const updateData: any = {
@@ -39,7 +42,7 @@ export async function updateProduct(
     }
 
     const { data, error } = await supabase
-      .from('productos') 
+      .from('productos')
       .update(updateData)
       .eq('id', id)
       .single();
