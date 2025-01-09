@@ -3,10 +3,10 @@ import { supabase } from './supaClient';
 export async function getProducts(search: string, offset: number) {
   const pageSize = 5; 
   let query = supabase
-    .from('productos') // Asegúrate de que la tabla se llame "productos"
-    .select('id, nombre, descripcion, imagen_url, precio, categoria') // Incluye el campo "categoria"
-    .ilike('nombre', `%${search}%`) // Filtro de búsqueda por nombre
-    .range(offset, offset + pageSize - 1); // Paginación (offset y pageSize)
+    .from('productos') 
+    .select('id, nombre, descripcion, imagen_url, precio, categoria')
+    .ilike('nombre', `%${search}%`) 
+    .range(offset, offset + pageSize - 1); 
 
   const { data, error, count } = await query;
 
@@ -15,7 +15,6 @@ export async function getProducts(search: string, offset: number) {
     return { products: [], newOffset: offset, totalProducts: 0 };
   }
 
-  // Devuelve los productos, el nuevo offset y el total de productos
   return {
     products: data,
     newOffset: offset + pageSize,

@@ -1,22 +1,20 @@
-// (dashboard)/products-table.tsx
+// (dashboard)/offer-table.tsx
 'use client';
 
 import { TableHead, TableRow, TableHeader, TableBody, Table } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Product } from './product';
+import { Offer } from './offer';
 import { useRouter } from 'next/navigation';
 
-export function ProductsTable({
-  products,
+export function OfferTable({
+  offers, 
   offset,
-  totalProducts,
-  onEdit
+  totalOffers  
 }: {
-  products: any[];
+  offers: { id: any; imagen_url: any }[];
   offset: number;
-  totalProducts: number;
-  onEdit: (product: any) => void;
+  totalOffers: number; 
 }) {
   const router = useRouter();
   const productsPerPage = 5;
@@ -34,28 +32,25 @@ export function ProductsTable({
         <TableHeader>
           <TableRow>
             <TableHead>Imagen</TableHead>
-            <TableHead>Nombre</TableHead>
-            <TableHead className="hidden md:table-cell">Descripción</TableHead>
-            <TableHead className="hidden md:table-cell">Categoria</TableHead>
-            <TableHead className="hidden md:table-cell">Precio</TableHead>
             <TableHead>Acciones</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((product) => (
-            <Product key={product.id} product={product} onEdit={onEdit} />
+          {offers.map((offer) => (
+            <Offer key={offer.id} product={offer} />
           ))}
         </TableBody>
       </Table>
-      
+
       <div className="flex justify-between items-center mt-4">
         <Button onClick={prevPage} disabled={offset === 0} variant="ghost">
           <ChevronLeft /> Anterior
         </Button>
-        <Button onClick={nextPage} disabled={offset + productsPerPage >= totalProducts} variant="ghost">
+        <Button onClick={nextPage} disabled={offset + productsPerPage >= totalOffers} variant="ghost">
           Siguiente <ChevronRight />
         </Button>
       </div>
     </>
   );
 }
+

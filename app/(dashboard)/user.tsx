@@ -10,10 +10,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { useRouter } from 'next/navigation'; // Importa de 'next/navigation' en lugar de 'next/router'
+import { useRouter } from 'next/navigation';
 
 export function User() {
-  const router = useRouter(); // Ahora se puede usar aquí
+  const router = useRouter();
 
   const handleSignOut = async () => {
     try {
@@ -25,7 +25,7 @@ export function User() {
       });
 
       if (res.ok) {
-        router.push('/login'); // Redirige a la página de login tras cerrar sesión
+        router.push('/login');
       } else {
         console.error('Error al cerrar sesión');
       }

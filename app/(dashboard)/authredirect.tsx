@@ -14,9 +14,9 @@ export function AuthRedirect() {
       ?.split('=')[1];
 
     if (!token) {
-      router.push('/login'); // Redirigir al login si no hay token
+      router.push('/login'); 
     }
   }, [router]);
 
-  return null; // Este componente no renderiza nada visible
+  return null;
 }

@@ -13,13 +13,12 @@ async function uploadImage(file: File) {
         return null;
     }
 
-    // Obtener la URL pública de la imagen subida
     const response = supabase.storage
         .from('images')
         .getPublicUrl(`products/${file.name}`);
 
     if (response.data) {
-        return response.data.publicUrl;  // Accede a la URL dentro de 'data'
+        return response.data.publicUrl; 
     } else {
         console.error('Error al obtener la URL pública');
         return null;

@@ -1,6 +1,6 @@
-import { Product } from './types'; // Ajusta según la ubicación de tu archivo de tipos
-import { supabase } from './supaClient'; // Cliente de Supabase
-import { uploadImage } from './uploadImages'; // Función para subir la imagen
+import { Product } from './types';
+import { supabase } from './supaClient';
+import { uploadImage } from './uploadImages';
 
 export async function updateProduct(
   id: string,
@@ -8,7 +8,7 @@ export async function updateProduct(
   descripcion: string,
   precio: number,
   imagen: File | null,
-  categoria: string // Nuevo parámetro para categoría
+  categoria: string 
 ): Promise<Product | null> {
   try {
     let imagenUrl: string | null = null;
@@ -31,16 +31,15 @@ export async function updateProduct(
       nombre,
       descripcion,
       precio,
-      categoria, // Agregar categoría al objeto de actualización
+      categoria,
     };
 
     if (imagenUrl) {
       updateData.imagen_url = imagenUrl;
     }
 
-    // Actualiza el producto en la base de datos
     const { data, error } = await supabase
-      .from('productos') // Asegúrate de que el nombre de la tabla sea correcto
+      .from('productos') 
       .update(updateData)
       .eq('id', id)
       .single();
