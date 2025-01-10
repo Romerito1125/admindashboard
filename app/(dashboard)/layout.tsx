@@ -7,7 +7,8 @@ import {
   PanelLeft,
   Settings,
   ShoppingCart,
-  Users2
+  Users2,
+  Percent
 } from 'lucide-react';
 
 import {
@@ -72,6 +73,9 @@ function DesktopNav() {
 
         <NavItem href="/" label="Productos">
           <Package className="h-5 w-5" />
+        </NavItem>
+        <NavItem href="/offers" label="Ofertas">
+          <Percent className="h-5 w-5" />
         </NavItem>
 
         <NavItem href="/customers" label="Clientes">
