@@ -45,6 +45,7 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
   const [imagen, setImagen] = useState<File | null>(null);
   const [categoria, setCategoria] = useState('');
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
+  const [productList, setProducts] = useState(products); // Usa el estado local para manejar la lista
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +59,11 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
           alert('Por favor, selecciona una imagen para el nuevo producto.');
           return;
         }
-        await insertProduct(imagen, nombre, descripcion, precio, categoria);
+
+        const newProduct = await insertProduct(imagen, nombre, descripcion, precio, categoria);
+        if (newProduct) {
+          setProducts((prev) => [newProduct, ...prev]); // Actualiza el estado con el nuevo producto
+        }
       }
 
       setIsModalOpen(false);
@@ -194,7 +199,7 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
       )}
 
       <ProductsTable
-        products={products}
+        products={productList}
         offset={newOffset}
         totalProducts={totalProducts}
         onEdit={handleEdit}

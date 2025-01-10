@@ -1,4 +1,4 @@
-import { Product } from './types';
+import { Product } from './types/Product';
 import { supabase } from './supaClient';
 import { uploadImage } from './uploadImages';
 
