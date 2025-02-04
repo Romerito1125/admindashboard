@@ -5,16 +5,20 @@ export async function insertOffer(file: File) {
     const imagenUrl = await uploadImage(file);
     if (!imagenUrl) {
         console.error('Error: No se pudo obtener la URL de la imagen');
-        return;
+        return null;
     }
 
-    const { data, error } = await supabase.from('ofertas').insert([{
-        imagen_url: imagenUrl,
-    }]);
+    const { data, error } = await supabase
+        .from('ofertas')
+        .insert([{ imagen_url: imagenUrl }])
+        .select()
+        .single(); // 🔥 Esto devuelve la oferta insertada
 
     if (error) {
-        console.error('Error creando el producto', error.message);
-    } else {
-        console.log('Oferta creado correctamente:', data);
+        console.error('Error creando la oferta', error.message);
+        return null;
     }
+
+    console.log('Oferta creada correctamente:', data);
+    return data; // 🔥 Retorna la oferta creada
 }
