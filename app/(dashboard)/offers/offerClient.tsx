@@ -12,24 +12,28 @@ interface Offer {
 }
 
 interface OfferClientProps {
-  offers: Offer[];  // Cambié "products" por "offers" para mayor consistencia
+  offers: Offer[];
   newOffset: number;
   totalOffers: number;
 }
 
 export function OfferClient({
-  offers,
+  offers: initialOffers,
   newOffset,
   totalOffers
 }: OfferClientProps) {
+  const [offers, setOffers] = useState<Offer[]>(initialOffers);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imagen, setImagen] = useState<File | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (imagen) {  // Verifica que imagen no sea null
-      await insertOffer(imagen);  // Ahora pasa solo un File
+    if (imagen) {
+      const newOffer = await insertOffer(imagen);
+      if (newOffer) {
+        setOffers((prevOffers) => [newOffer, ...prevOffers]);
+      }
       setIsModalOpen(false);
       resetForm();
     } else {
