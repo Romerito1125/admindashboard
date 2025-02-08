@@ -31,3 +31,6 @@ export function ProductsTable({
     </Table>
   );
 }
+
+
+/* Conflicto */

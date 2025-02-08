@@ -200,3 +200,5 @@ export function ProductsClient({ products }: ProductsClientProps) {
     </>
   );
 }
+
+/* Conflicto */

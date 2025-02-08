@@ -15,3 +15,6 @@ export async function getProducts(search: string) {
 
   return { products: data };
 }
+
+
+/* conflicto */
