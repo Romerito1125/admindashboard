@@ -18,8 +18,6 @@ interface Product {
 
 interface ProductsClientProps {
   products: Product[];
-  newOffset: number;
-  totalProducts: number;
 }
 
 const CATEGORIAS = [
@@ -37,7 +35,7 @@ const CATEGORIAS = [
   'Plantas',
 ];
 
-export function ProductsClient({ products, newOffset, totalProducts }: ProductsClientProps) {
+export function ProductsClient({ products }: ProductsClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [nombre, setNombre] = useState('');
   const [precio, setPrecio] = useState(0);
@@ -62,7 +60,7 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
 
         const newProduct = await insertProduct(imagen, nombre, descripcion, precio, categoria);
         if (newProduct) {
-          setProducts((prev) => [newProduct, ...prev]); // Actualiza el estado con el nuevo producto
+          setProducts((prev) => [newProduct, ...prev]);
         }
       }
 
@@ -198,12 +196,7 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
         </div>
       )}
 
-      <ProductsTable
-        products={productList}
-        offset={newOffset}
-        totalProducts={totalProducts}
-        onEdit={handleEdit}
-      />
+      <ProductsTable products={productList} onEdit={handleEdit} />
     </>
   );
 }
