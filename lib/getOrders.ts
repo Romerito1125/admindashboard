@@ -1,17 +1,24 @@
 import { supabase } from './supaClient';
 
 export async function getOrders(filter?: string) {
-  const query = supabase.from('pedidos').select(`
+  const query = supabase.from('transacciones').select(`
     id,
-    cliente_nombre,
-    cliente_correo,
+    buyer_email,
+    descripcion,
+    estado_transaccion,
+    reference_code,
+    reference_pol,
+    transaction_id,
+    trazability_code,
+    metodo_pago,
+    fecha_procesamiento,
     direccion_envio,
-    estado,
-    resumen
+    ciudad,
+    telefono
   `);
 
   if (filter) {
-    query.eq('estado', filter);
+    query.eq('estado_transaccion', filter);
   }
 
   const { data, error } = await query;
@@ -23,11 +30,10 @@ export async function getOrders(filter?: string) {
   return data;
 }
 
-
 export async function updateOrderStatus(id: string, newStatus: string) {
   const { data, error } = await supabase
-    .from('pedidos')
-    .update({ estado: newStatus })
+    .from('transacciones')
+    .update({ estado_pedido: newStatus }) // Cambio a estado_pedido
     .eq('id', id);
 
   if (error) {

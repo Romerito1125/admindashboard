@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { AuthRedirect } from '../authredirect';
+
 export default function CustomersPage() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -36,7 +37,7 @@ export default function CustomersPage() {
       await updateOrderStatus(orderId, newStatus);
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
-          order.id === orderId ? { ...order, estado: newStatus } : order
+          order.id === orderId ? { ...order, estado_pedido: newStatus } : order
         )
       );
     } catch (error) {
@@ -47,7 +48,6 @@ export default function CustomersPage() {
   const orderStates = ['pendiente', 'en preparación', 'listo', 'enviado'];
 
   return (
-    
     <Card>
       <AuthRedirect />
       <CardHeader>
@@ -66,10 +66,10 @@ export default function CustomersPage() {
             <thead>
               <tr>
                 <th className="border border-gray-300 px-4 py-2">ID</th>
-                <th className="border border-gray-300 px-4 py-2">Cliente</th>
                 <th className="border border-gray-300 px-4 py-2">Correo</th>
                 <th className="border border-gray-300 px-4 py-2">Dirección</th>
-                <th className="border border-gray-300 px-4 py-2">Resumen</th>
+                <th className="border border-gray-300 px-4 py-2">Ciudad</th>
+                <th className="border border-gray-300 px-4 py-2">Teléfono</th>
                 <th className="border border-gray-300 px-4 py-2">Estado</th>
                 <th className="border border-gray-300 px-4 py-2">Actualizar</th>
               </tr>
@@ -78,14 +78,14 @@ export default function CustomersPage() {
               {orders.map((order) => (
                 <tr key={order.id}>
                   <td className="border border-gray-300 px-4 py-2">{order.id}</td>
-                  <td className="border border-gray-300 px-4 py-2">{order.cliente_nombre}</td>
-                  <td className="border border-gray-300 px-4 py-2">{order.cliente_correo}</td>
+                  <td className="border border-gray-300 px-4 py-2">{order.buyer_email}</td>
                   <td className="border border-gray-300 px-4 py-2">{order.direccion_envio}</td>
-                  <td className="border border-gray-300 px-4 py-2">{order.resumen}</td>
-                  <td className="border border-gray-300 px-4 py-2">{order.estado}</td>
+                  <td className="border border-gray-300 px-4 py-2">{order.ciudad}</td>
+                  <td className="border border-gray-300 px-4 py-2">{order.telefono}</td>
+                  <td className="border border-gray-300 px-4 py-2">{order.estado_pedido}</td>
                   <td className="border border-gray-300 px-4 py-2">
                     <select
-                      value={order.estado}
+                      value={order.estado_pedido}
                       onChange={(e) => handleStatusChange(order.id, e.target.value)}
                       className="border border-gray-300 p-1 rounded"
                     >

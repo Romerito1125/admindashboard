@@ -45,7 +45,7 @@ export function ProductsClient({ products, newOffset, totalProducts }: ProductsC
   const [imagen, setImagen] = useState<File | null>(null);
   const [categoria, setCategoria] = useState('');
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
-  const [productList, setProducts] = useState(products); // Usa el estado local para manejar la lista
+  const [productList, setProducts] = useState(products);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
