@@ -12,7 +12,7 @@ export async function insertOffer(file: File) {
         .from('ofertas')
         .insert([{ imagen_url: imagenUrl }])
         .select()
-        .single(); // 🔥 Esto devuelve la oferta insertada
+        .single();
 
     if (error) {
         console.error('Error creando la oferta', error.message);
@@ -20,5 +20,5 @@ export async function insertOffer(file: File) {
     }
 
     console.log('Oferta creada correctamente:', data);
-    return data; // 🔥 Retorna la oferta creada
+    return data;
 }
