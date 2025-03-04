@@ -11,11 +11,7 @@ import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteOffer } from '../../../lib/deleteOffer';
 
-export function Offer({
-  product
-}: {
-  product: any;
-}) {
+export function Offer({ product }: { product: any }) {
   const handleDelete = async () => {
     try {
       const formData = new FormData();
@@ -33,13 +29,15 @@ export function Offer({
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
-        <Image
-          alt="Imagen del producto"
-          className="aspect-square rounded-md object-cover"
-          height="512"
-          src={product.imagen_url}
-          width="512"
-        />
+        <div className="w-20 h-20 rounded-md overflow-hidden border">
+          <Image
+            alt="Imagen del producto"
+            src={product.imagen_url}
+            width={80}
+            height={80}
+            className="w-full h-full object-cover"
+          />
+        </div>
       </TableCell>
       <TableCell>
         <DropdownMenu>
@@ -51,9 +49,7 @@ export function Offer({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem onClick={handleDelete}>
-              Eliminar
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDelete}>Eliminar</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>
