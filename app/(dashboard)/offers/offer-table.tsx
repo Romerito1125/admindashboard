@@ -8,16 +8,19 @@ import { Offer } from './offer';
 import { useRouter } from 'next/navigation';
 
 export function OfferTable({
-  offers, 
+  offers,
+  setOffers,
   offset,
-  totalOffers  
+  totalOffers
 }: {
-  offers: { id: any; imagen_url: any }[];
+  offers: { id: string; imagen_url: string }[];
+  setOffers: React.Dispatch<React.SetStateAction<{ id: string; imagen_url: string }[]>>;
   offset: number;
-  totalOffers: number; 
+  totalOffers: number;
 }) {
   const router = useRouter();
   const productsPerPage = 5;
+
   function prevPage() {
     router.push(`/?offset=${Math.max(0, offset - productsPerPage)}`);
   }
@@ -37,7 +40,7 @@ export function OfferTable({
         </TableHeader>
         <TableBody>
           {offers.map((offer) => (
-            <Offer key={offer.id} product={offer} />
+            <Offer key={offer.id} product={offer} setOffers={setOffers} />
           ))}
         </TableBody>
       </Table>
@@ -53,4 +56,3 @@ export function OfferTable({
     </>
   );
 }
-

@@ -1,3 +1,5 @@
+//offer
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,13 +13,16 @@ import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteOffer } from '../../../lib/deleteOffer';
 
-export function Offer({ product }: { product: any }) {
+export function Offer({ product, setOffers }: { product: { id: string; imagen_url: string }; setOffers: React.Dispatch<React.SetStateAction<{ id: string; imagen_url: string }[]>> }) {
   const handleDelete = async () => {
     try {
       const formData = new FormData();
       formData.append('offerId', product.id);
 
       await deleteOffer(formData);
+
+      // Eliminar oferta del estado local para actualizar la UI
+      setOffers((prevOffers) => prevOffers.filter((offer) => offer.id !== product.id));
 
       alert('Oferta eliminada con éxito.');
     } catch (error) {

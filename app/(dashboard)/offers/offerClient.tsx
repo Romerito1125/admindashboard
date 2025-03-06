@@ -1,3 +1,5 @@
+//offerClient
+
 'use client';
 
 import { useState } from 'react';
@@ -32,6 +34,7 @@ export function OfferClient({
     if (imagen) {
       const newOffer = await insertOffer(imagen);
       if (newOffer) {
+        // 🔥 Agregar la nueva oferta al estado sin recargar la página
         setOffers((prevOffers) => [newOffer, ...prevOffers]);
       }
       setIsModalOpen(false);
@@ -103,6 +106,7 @@ export function OfferClient({
 
       <OfferTable
         offers={offers}
+        setOffers={setOffers}
         offset={newOffset}
         totalOffers={totalOffers}
       />
