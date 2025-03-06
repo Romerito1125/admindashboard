@@ -1,3 +1,5 @@
+//productsClient.tsx
+
 'use client';
 
 import { useState } from 'react';
@@ -46,7 +48,6 @@ export function ProductsClient({ products }: ProductsClientProps) {
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [productList, setProducts] = useState(products);
 
-  // Función para resetear el formulario
   const resetForm = () => {
     setNombre('');
     setPrecio(0);
@@ -62,23 +63,9 @@ export function ProductsClient({ products }: ProductsClientProps) {
     try {
       if (productToEdit) {
         const imagenFinal = imagen || productToEdit.imagen_url;
-        const updatedProduct = await updateProduct(
-          productToEdit.id,
-          nombre,
-          descripcion,
-          precio,
-          imagenFinal,
-          categoria
-        );
-
-        if (updatedProduct) {
-          setProducts((prev) =>
-            prev.map((product) =>
-              product.id === productToEdit.id ? { ...product, ...updatedProduct } : product
-            )
-          );
-          window.location.reload(); // Recargar la página después de actualizar
-        }
+        await updateProduct(productToEdit.id, nombre, descripcion, precio, imagenFinal, categoria);
+        
+        window.location.reload(); // Solo se recarga al actualizar un producto
       } else {
         if (!imagen) {
           alert('Por favor, selecciona una imagen para el nuevo producto.');
