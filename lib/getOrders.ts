@@ -33,7 +33,7 @@ export async function getOrders(filter?: string) {
 export async function updateOrderStatus(id: string, newStatus: string) {
   const { data, error } = await supabase
     .from('transacciones')
-    .update({ estado_pedido: newStatus }) // Cambio a estado_pedido
+    .update({ estado_pedido: newStatus })
     .eq('id', id);
 
   if (error) {

@@ -62,28 +62,42 @@ export default function CustomersPage() {
         ) : orders.length === 0 ? (
           <p>No hay órdenes disponibles.</p>
         ) : (
-          <table className="table-auto w-full border-collapse border border-gray-200">
+          <table className="table-auto w-full border-collapse border border-gray-200 text-sm">
             <thead>
               <tr>
-                <th className="border border-gray-300 px-4 py-2">ID</th>
-                <th className="border border-gray-300 px-4 py-2">Correo</th>
-                <th className="border border-gray-300 px-4 py-2">Dirección</th>
-                <th className="border border-gray-300 px-4 py-2">Ciudad</th>
-                <th className="border border-gray-300 px-4 py-2">Teléfono</th>
-                <th className="border border-gray-300 px-4 py-2">Estado</th>
-                <th className="border border-gray-300 px-4 py-2">Actualizar</th>
+                <th className="border border-gray-300 px-2 py-2">ID</th>
+                <th className="border border-gray-300 px-2 py-2">Correo</th>
+                <th className="border border-gray-300 px-2 py-2">Descripción</th>
+                <th className="border border-gray-300 px-2 py-2">Estado</th>
+                <th className="border border-gray-300 px-2 py-2">Ref. Código</th>
+                <th className="border border-gray-300 px-2 py-2">Ref. Pol</th>
+                <th className="border border-gray-300 px-2 py-2">Transacción ID</th>
+                <th className="border border-gray-300 px-2 py-2">Trazabilidad</th>
+                <th className="border border-gray-300 px-2 py-2">Método Pago</th>
+                <th className="border border-gray-300 px-2 py-2">Fecha</th>
+                <th className="border border-gray-300 px-2 py-2">Dirección</th>
+                <th className="border border-gray-300 px-2 py-2">Ciudad</th>
+                <th className="border border-gray-300 px-2 py-2">Teléfono</th>
+                <th className="border border-gray-300 px-2 py-2">Actualizar</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order) => (
                 <tr key={order.id}>
-                  <td className="border border-gray-300 px-4 py-2">{order.id}</td>
-                  <td className="border border-gray-300 px-4 py-2">{order.buyer_email}</td>
-                  <td className="border border-gray-300 px-4 py-2">{order.direccion_envio}</td>
-                  <td className="border border-gray-300 px-4 py-2">{order.ciudad}</td>
-                  <td className="border border-gray-300 px-4 py-2">{order.telefono}</td>
-                  <td className="border border-gray-300 px-4 py-2">{order.estado_pedido}</td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-gray-300 px-2 py-2">{order.id}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.buyer_email}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.descripcion}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.estado_transaccion}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.reference_code}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.reference_pol}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.transaction_id}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.trazability_code}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.metodo_pago}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.fecha_procesamiento}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.direccion_envio}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.ciudad}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.telefono}</td>
+                  <td className="border border-gray-300 px-2 py-2">
                     <select
                       value={order.estado_pedido}
                       onChange={(e) => handleStatusChange(order.id, e.target.value)}
