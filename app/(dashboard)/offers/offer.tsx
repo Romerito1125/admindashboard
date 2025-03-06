@@ -61,3 +61,4 @@ export function Offer({ product, setOffers }: { product: { id: string; imagen_ur
     </TableRow>
   );
 }
+/* */
