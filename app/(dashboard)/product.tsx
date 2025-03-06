@@ -1,7 +1,6 @@
-// (dashboard)/product.tsx
+//product.tsx
 
 import Image from 'next/image';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -10,17 +9,34 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, Table } from 'lucide-react';
+import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { deleteProduct } from '../../lib/deleteProduct';
 
 export function Product({
   product,
-  onEdit
+  onEdit,
+  onDelete
 }: {
   product: any;
   onEdit: (product: any) => void;
+  onDelete: (productId: string) => void;
 }) {
+  const handleDelete = async () => {
+    if (!product.id) {
+      alert('ID del producto no válido.');
+      return;
+    }
+
+    try {
+      await deleteProduct(product.id);
+      onDelete(product.id); // Actualizar la tabla eliminando el producto del estado
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+      alert('No se pudo eliminar el producto.');
+    }
+  };
+
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -42,20 +58,13 @@ export function Product({
           <DropdownMenuTrigger asChild>
             <Button aria-haspopup="true" size="icon" variant="ghost">
               <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">Ocultar menu</span>
+              <span className="sr-only">Ocultar menú</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => onEdit(product)}>
-              Editar
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <form action={deleteProduct}>
-                <input type="hidden" name="productId" value={product.id} />
-                <button type="submit">Eliminar</button>
-              </form>
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onEdit(product)}>Editar</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleDelete}>Eliminar</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>
