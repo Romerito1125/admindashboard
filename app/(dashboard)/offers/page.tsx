@@ -12,7 +12,7 @@ export default async function ProductsPage({
   const search = searchParamsData.q ?? '';
   const offset = parseInt(searchParamsData.offset ?? '0');
 
-  const { offers, newOffset, totalOffers } = await getOffers(search, offset);
+  const { offers, totalOffers } = await getOffers(search, offset);
 
   return (
     <>
@@ -25,7 +25,6 @@ export default async function ProductsPage({
         <TabsContent value="all">
           <OfferClient
             offers={offers}  
-            newOffset={newOffset ?? 0}
             totalOffers={totalOffers} 
           />
         </TabsContent>
