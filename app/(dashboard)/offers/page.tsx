@@ -3,16 +3,8 @@ import { OfferClient } from './offerClient';
 import { AuthRedirect } from '../authredirect';
 import { getOffers } from '@/lib/getOffers';
 
-export default async function ProductsPage({
-  searchParams
-}: {
-  searchParams: Promise<{ q: string; offset: string }>;
-}) {
-  const searchParamsData = await searchParams;
-  const search = searchParamsData.q ?? '';
-  const offset = parseInt(searchParamsData.offset ?? '0');
-
-  const { offers, newOffset, totalOffers } = await getOffers(search, offset);
+export default async function ProductsPage() {
+  const { offers } = await getOffers();
 
   return (
     <>
@@ -23,11 +15,7 @@ export default async function ProductsPage({
         </TabsList>
 
         <TabsContent value="all">
-          <OfferClient
-            offers={offers}  
-            newOffset={newOffset ?? 0}
-            totalOffers={totalOffers} 
-          />
+          <OfferClient offers={offers} />
         </TabsContent>
       </Tabs>
     </>

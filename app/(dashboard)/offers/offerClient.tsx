@@ -15,15 +15,9 @@ interface Offer {
 
 interface OfferClientProps {
   offers: Offer[];
-  newOffset: number;
-  totalOffers: number;
 }
 
-export function OfferClient({
-  offers: initialOffers,
-  newOffset,
-  totalOffers
-}: OfferClientProps) {
+export function OfferClient({ offers: initialOffers }: OfferClientProps) {
   const [offers, setOffers] = useState<Offer[]>(initialOffers);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imagen, setImagen] = useState<File | null>(null);
@@ -34,7 +28,6 @@ export function OfferClient({
     if (imagen) {
       const newOffer = await insertOffer(imagen);
       if (newOffer) {
-        // 🔥 Agregar la nueva oferta al estado sin recargar la página
         setOffers((prevOffers) => [newOffer, ...prevOffers]);
       }
       setIsModalOpen(false);
@@ -104,12 +97,9 @@ export function OfferClient({
         </div>
       )}
 
-      <OfferTable
-        offers={offers}
-        setOffers={setOffers}
-
-      />
+      <OfferTable offers={offers} setOffers={setOffers} />
     </>
   );
 }
+
 /* */

@@ -1,5 +1,3 @@
-//productsClient.tsx
-
 'use client';
 
 import { useState } from 'react';
@@ -7,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
 import { insertProduct } from '@/lib/insertProduct';
 import { updateProduct } from '@/lib/updateProduct';
-import { deleteProduct } from '@/lib/deleteProduct'; // ✅ Importado
+import { deleteProduct } from '@/lib/deleteProduct';
 import { ProductsTable } from './products-table';
 
 interface Product {
@@ -48,6 +46,16 @@ export function ProductsClient({ products }: ProductsClientProps) {
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
   const [productList, setProducts] = useState(products);
 
+  // Función para resetear el formulario
+  const resetForm = () => {
+    setNombre('');
+    setPrecio(0);
+    setDescripcion('');
+    setImagen(null);
+    setCategoria('');
+    setProductToEdit(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -69,6 +77,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
               product.id === productToEdit.id ? { ...product, ...updatedProduct } : product
             )
           );
+          window.location.reload(); // Recargar la página después de actualizar
         }
       } else {
         if (!imagen) {
@@ -113,15 +122,6 @@ export function ProductsClient({ products }: ProductsClientProps) {
       console.error('Error al eliminar el producto:', error);
       alert('No se pudo eliminar el producto.');
     }
-  };
-
-  const resetForm = () => {
-    setNombre('');
-    setPrecio(0);
-    setDescripcion('');
-    setImagen(null);
-    setCategoria('');
-    setProductToEdit(null);
   };
 
   return (
