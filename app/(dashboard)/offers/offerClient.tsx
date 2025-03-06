@@ -107,8 +107,7 @@ export function OfferClient({
       <OfferTable
         offers={offers}
         setOffers={setOffers}
-        offset={newOffset}
-        totalOffers={totalOffers}
+
       />
     </>
   );

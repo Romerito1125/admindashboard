@@ -8,7 +8,6 @@ export const generarToken = (username: string) => {
   return jwt.sign(payload, secret, options);
 };
 
-// Verificar un JWT
 export const verifyToken = (token: string) => {
   const secret = process.env.JWT_SECRET || 'default_secret';
   try {

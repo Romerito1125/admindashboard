@@ -21,7 +21,6 @@ export function Offer({ product, setOffers }: { product: { id: string; imagen_ur
 
       await deleteOffer(formData);
 
-      // Eliminar oferta del estado local para actualizar la UI
       setOffers((prevOffers) => prevOffers.filter((offer) => offer.id !== product.id));
 
       alert('Oferta eliminada con éxito.');
@@ -34,12 +33,12 @@ export function Offer({ product, setOffers }: { product: { id: string; imagen_ur
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
-        <div className="w-20 h-20 rounded-md overflow-hidden border">
+        <div className="w-100 h-100 rounded-md overflow-hidden border">
           <Image
             alt="Imagen del producto"
             src={product.imagen_url}
-            width={80}
-            height={80}
+            width={1000}
+            height={1000}
             className="w-full h-full object-cover"
           />
         </div>
