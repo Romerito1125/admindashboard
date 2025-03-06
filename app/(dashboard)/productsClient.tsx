@@ -1,3 +1,5 @@
+//productsClient.tsx
+
 'use client';
 
 import { useState } from 'react';
@@ -5,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
 import { insertProduct } from '@/lib/insertProduct';
 import { updateProduct } from '@/lib/updateProduct';
+import { deleteProduct } from '@/lib/deleteProduct'; // ✅ Importado
 import { ProductsTable } from './products-table';
 
 interface Product {
@@ -51,7 +54,22 @@ export function ProductsClient({ products }: ProductsClientProps) {
     try {
       if (productToEdit) {
         const imagenFinal = imagen || productToEdit.imagen_url;
-        await updateProduct(productToEdit.id, nombre, descripcion, precio, imagenFinal, categoria);
+        const updatedProduct = await updateProduct(
+          productToEdit.id,
+          nombre,
+          descripcion,
+          precio,
+          imagenFinal,
+          categoria
+        );
+
+        if (updatedProduct) {
+          setProducts((prev) =>
+            prev.map((product) =>
+              product.id === productToEdit.id ? { ...product, ...updatedProduct } : product
+            )
+          );
+        }
       } else {
         if (!imagen) {
           alert('Por favor, selecciona una imagen para el nuevo producto.');
@@ -84,6 +102,19 @@ export function ProductsClient({ products }: ProductsClientProps) {
     setIsModalOpen(true);
   };
 
+  const handleDelete = async (id: string) => {
+    const confirmDelete = confirm('¿Estás seguro de que quieres eliminar este producto?');
+    if (!confirmDelete) return;
+
+    try {
+      await deleteProduct(id);
+      setProducts((prev) => prev.filter((product) => product.id !== id));
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+      alert('No se pudo eliminar el producto.');
+    }
+  };
+
   const resetForm = () => {
     setNombre('');
     setPrecio(0);
@@ -113,12 +144,12 @@ export function ProductsClient({ products }: ProductsClientProps) {
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg w-96">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full">
             <h3 className="text-lg font-medium mb-4">
               {productToEdit ? 'Editar Producto' : 'Añadir Nuevo Producto'}
             </h3>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
                 <label className="block text-sm font-medium">Nombre</label>
                 <input
                   type="text"
@@ -129,7 +160,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
                 />
               </div>
 
-              <div className="mb-4">
+              <div>
                 <label className="block text-sm font-medium">Precio</label>
                 <input
                   type="number"
@@ -140,17 +171,17 @@ export function ProductsClient({ products }: ProductsClientProps) {
                 />
               </div>
 
-              <div className="mb-4">
+              <div>
                 <label className="block text-sm font-medium">Descripción</label>
                 <textarea
                   value={descripcion}
                   onChange={(e) => setDescripcion(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md resize-none h-20"
                   required
                 />
               </div>
 
-              <div className="mb-4">
+              <div>
                 <label className="block text-sm font-medium">Categoría</label>
                 <select
                   value={categoria}
@@ -169,7 +200,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
                 </select>
               </div>
 
-              <div className="mb-4">
+              <div>
                 <label className="block text-sm font-medium">Imagen</label>
                 <input
                   type="file"
@@ -196,9 +227,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
         </div>
       )}
 
-      <ProductsTable products={productList} onEdit={handleEdit} />
+      <ProductsTable products={productList} onEdit={handleEdit} onDelete={handleDelete} />
     </>
   );
 }
-
-/* Conflicto */
