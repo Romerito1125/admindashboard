@@ -12,7 +12,7 @@ export default async function ProductsPage({
   const search = searchParamsData.q ?? '';
   const offset = parseInt(searchParamsData.offset ?? '0');
 
-  const { offers } = await getOffers(search, offset);
+  const { offers } = await getOffers(search);
 
   return (
     <>
