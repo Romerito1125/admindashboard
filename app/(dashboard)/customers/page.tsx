@@ -76,8 +76,8 @@ export default function CustomersPage() {
                 <th className="border border-gray-300 px-2 py-2">Método Pago</th>
                 <th className="border border-gray-300 px-2 py-2">Fecha</th>
                 <th className="border border-gray-300 px-2 py-2">Dirección</th>
-                <th className="border border-gray-300 px-2 py-2">Ciudad</th>
                 <th className="border border-gray-300 px-2 py-2">Teléfono</th>
+                <th className="border border-gray-300 px-2 py-2">Total pagado</th>
                 <th className="border border-gray-300 px-2 py-2">Actualizar</th>
               </tr>
             </thead>
@@ -95,8 +95,9 @@ export default function CustomersPage() {
                   <td className="border border-gray-300 px-2 py-2">{order.metodo_pago}</td>
                   <td className="border border-gray-300 px-2 py-2">{order.fecha_procesamiento}</td>
                   <td className="border border-gray-300 px-2 py-2">{order.direccion_envio}</td>
-                  <td className="border border-gray-300 px-2 py-2">{order.ciudad}</td>
                   <td className="border border-gray-300 px-2 py-2">{order.telefono}</td>
+                  <td className="border border-gray-300 px-2 py-2">{order.total_pagado}</td>
+
                   <td className="border border-gray-300 px-2 py-2">
                     <select
                       value={order.estado_pedido}

@@ -14,7 +14,8 @@ export async function getOrders(filter?: string) {
     fecha_procesamiento,
     direccion_envio,
     ciudad,
-    telefono
+    telefono,
+    total_pagado
   `);
 
   if (filter) {
